@@ -1,13 +1,10 @@
-import webbrowser
-from pathlib import Path
-from jinja2 import Template
+from flask import Flask, render_template
 
-# 1. Lê o index.html e renderiza os dados
-conteudo = Template(Path("index.html").read_text(encoding="utf-8")).render(nome="Carlos", idade=28)
+app = Flask(__name__)
 
-# 2. Escreve direto em um arquivo temporário
-arquivo_temp = Path("temp.html")
-arquivo_temp.write_text(conteudo, encoding="utf-8")
+@app.route("/")
+def home():
+    return render_template("index.html", nome="Carlos", idade=28)
 
-# 3. Abre no navegador
-webbrowser.open(arquivo_temp.absolute().as_uri())
+if __name__ == "__main__":
+    app.run(debug=True)
